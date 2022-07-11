@@ -31,8 +31,6 @@ pub fn rec_access(val: &str, data: &mut LRUStack) -> Option<u32> {
 mod tests {
     use super::*;
 
-    const E: f32 = 0.0001;
-
     #[test]
     fn cyclic() {
         // a b c a b c
