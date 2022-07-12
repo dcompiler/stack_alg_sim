@@ -5,26 +5,27 @@ pub struct LRUStack {
  	pub stack: Vec<String>,
 }
 
-pub fn init() -> LRUStack {
-	let stack = Vec::new();
-	LRUStack {
-		stack,
-	}
-}
+impl LRUStack {
 
-pub fn rec_access(val: &str, data: &mut LRUStack) -> Option<u32> {
-	let dist: Option<u32> = None;
-    if data.stack.contains(&val.to_string()){
-        let pos = data.stack.iter().position(|x| *x == val).unwrap();
-        dist = Some((data.stack.len() - pos) as u32);
-        data.stack.remove(pos);
-        data.stack.push(val.to_string());
-        *data.dmd += (dist as f32).sqrt();
-    }
-    else{
-        data.stack.push(val.to_string());
-    }
-    return dist;
+	pub fn new() -> LRUStack {
+		LRUStack {
+			stack: Vec::new(),
+		}
+	}
+
+	pub fn rec_access(&mut self, val: &str) -> Option<u32> {
+		let mut dist: Option<u32> = None;
+		if self.stack.contains(&val.to_string()){
+			let pos = self.stack.iter().position(|x| *x == val).unwrap();
+			dist = Some((self.stack.len() - pos) as u32);
+			self.stack.remove(pos);
+			self.stack.push(val.to_string());
+		}
+		else{
+			self.stack.push(val.to_string());
+		}
+		return dist;
+	}
 }
 
 #[cfg(test)]
@@ -33,37 +34,23 @@ mod tests {
 
     #[test]
     fn cyclic() {
-        // a b c a b c
-        let mut data = init();
-        trace("a", &mut data);
-        trace("b", &mut data);
-        trace("c", &mut data);
-        trace("a", &mut data);
-        trace("b", &mut data);
-        trace("c", &mut data);
+        let mut analyzer = LRUStack::new();
+        let mut dists = Vec::new();
+        for c in "abc abc".chars().filter(|c| !c.is_whitespace()) {
+			dists.push( analyzer.rec_access( &c.to_string() ));
+		}
 
-        let gt = 3.0*(3.0_f32.sqrt());
-
-        println!("cyclic: {}", *data.dmd);
-
-        assert!((*data.dmd - gt).abs() < E);
+        assert_eq!(dists, [None, None, None, Some(3), Some(3), Some(3)]);
     }
 
     #[test]
     fn sawtooth() {
-        // a b c c b a
-        let mut data = init();
-        trace("a", &mut data);
-        trace("b", &mut data);
-        trace("c", &mut data);
-        trace("c", &mut data);
-        trace("b", &mut data);
-        trace("a", &mut data);
+        let mut analyzer = LRUStack::new();
+        let mut dists = Vec::new();
+        for c in "abc cba".chars().filter(|c| !c.is_whitespace()) {
+			dists.push( analyzer.rec_access( &c.to_string() ));
+		}
 
-        let gt = 1.0 + 2.0_f32.sqrt() + 3.0_f32.sqrt();
-
-        println!("sawtooth: {}", *data.dmd);
-
-        assert!((*data.dmd - gt).abs() < E);
+        assert_eq!(dists, [None, None, None, Some(1), Some(2), Some(3)]);
     }
 }
