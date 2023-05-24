@@ -1,6 +1,9 @@
 [package]
 name = "lru-vec"
 version = "0.1.0"
-edition = "2021"
+edition = "2015"
 
 [dependencies]
+csv = "1.2.1"
+rand = "0.8.5"
+rayon = "1.7.0"
