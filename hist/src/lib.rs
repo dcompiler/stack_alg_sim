@@ -9,6 +9,10 @@ pub struct Hist {
 }
 
 impl Hist {
+    pub fn new() -> Hist {
+	Hist{hist: HashMap::new()}
+    }
+    
     pub fn add_dist(&mut self, d: Option<usize> ) {
 	self.hist.entry(d).and_modify(|counter| *counter += 1).or_insert(1);
     }
@@ -47,7 +51,7 @@ mod tests {
 
     #[test]
     fn it_works() {
-	let mut h = Hist{hist: HashMap::new()};
+	let mut h = Hist::new();
 	h.add_dist(None);
 	h.add_dist(Some(1));
 	h.add_dist(Some(1));
