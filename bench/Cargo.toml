@@ -1,0 +1,17 @@
+[package]
+name = "bench"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+csv = "1.2.1"
+rand = "0.8.5"
+rayon = "1.7.0"
+lru-stack = { path = "../lru-stack" }
+lru-vec = { path = "../lru-vec"}
+olken = { path = "../olken" }
+test-cases = { path = "../test-cases" }
+rusoto_core = "0.47.0"
+rusoto_s3 = "0.47.0"

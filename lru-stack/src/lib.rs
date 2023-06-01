@@ -9,23 +9,23 @@ pub struct LRUStack<T> {
 impl<T: PartialEq> LRUStack<T> {
 
     pub fn new() -> LRUStack<T> {
-	LRUStack {
-	    stack: LinkedList::new(),
-	}
+        LRUStack {
+            stack: LinkedList::new(),
+        }
     }
 
     pub fn rec_access(&mut self, val: T) -> Option<usize> {
 
-	let pos = self.stack.iter().position( |x| *x == val );
+        let pos = self.stack.iter().position( |x| *x == val );
 
 
-	if let Some(rd) = pos {
-	    self.stack.remove(rd);
-	}
+        if let Some(rd) = pos {
+            self.stack.remove(rd);
+        }
 
-	self.stack.push_front(val);
-	
-	return pos.map(|x| x+1);
+        self.stack.push_front(val);
+        
+        return pos.map(|x| x+1);
     }
 }
 
