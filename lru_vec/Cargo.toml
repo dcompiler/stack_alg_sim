@@ -1,5 +1,5 @@
 [package]
-name = "lru-vec"
+name = "lru_vec"
 version = "0.1.0"
 edition = "2015"
 
