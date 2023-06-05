@@ -8,10 +8,12 @@ edition = "2021"
 [dependencies]
 csv = "1.2.1"
 rand = "0.8.5"
-rayon = "1.7.0"
-lru-stack = { path = "../lru-stack" }
-lru-vec = { path = "../lru-vec"}
+lru_stack = { path = "../lru_stack" }
+lru_vec = { path = "../lru_vec"}
 olken = { path = "../olken" }
-test-cases = { path = "../test-cases" }
+test_cases = { path = "../test_cases" }
+hist = { path = "../hist" }
 rusoto_core = "0.47.0"
 rusoto_s3 = "0.47.0"
+tokio = { version = "1", features = ["full"] }
+lru_trait = { path = "../lru_trait" }
