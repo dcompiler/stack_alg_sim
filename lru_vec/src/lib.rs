@@ -1,6 +1,14 @@
+use lru_trait::LRU;
+
 #[derive(Debug)]
 pub struct LRUVec<T> {
  	pub stack: Vec<Option<Box<T>>>,
+}
+
+impl<T: PartialEq + Clone> LRU<T> for LRUVec<T> {
+    fn rec_access(&mut self, val: T) -> Option<u32> {
+        self.rec_access_impl(val)
+    }
 }
 
 impl<T: PartialEq> LRUVec<T> {
@@ -11,7 +19,7 @@ impl<T: PartialEq> LRUVec<T> {
 		}
 	}
 
-	pub fn rec_access(&mut self, val: T) -> Option<u32> {
+	pub fn rec_access_impl(&mut self, val: T) -> Option<u32> {
 		if self.stack.len() == 0 {
 			self.stack.push(Some(Box::new(val)));
 			return None;

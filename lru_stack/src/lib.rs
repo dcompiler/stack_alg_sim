@@ -1,4 +1,5 @@
 #![feature(linked_list_remove)]   // Need nightly build of the Rust compiler
+use lru_trait::LRU;
 use std::collections::LinkedList;
 
 #[derive(Debug)]
@@ -6,26 +7,32 @@ pub struct LRUStack<T> {
  	pub stack: LinkedList<T>,
 }
 
+impl<T: PartialEq + Clone> LRU<T> for LRUStack<T> {
+    fn rec_access(&mut self, val: T) -> Option<u32> {
+        self.rec_access_impl(val)
+    }
+}
+
 impl<T: PartialEq> LRUStack<T> {
 
     pub fn new() -> LRUStack<T> {
-	LRUStack {
-	    stack: LinkedList::new(),
-	}
+        LRUStack {
+            stack: LinkedList::new(),
+        }
     }
 
-    pub fn rec_access(&mut self, val: T) -> Option<usize> {
+    pub fn rec_access_impl(&mut self, val: T) -> Option<u32> {
 
-	let pos = self.stack.iter().position( |x| *x == val );
+        let pos = self.stack.iter().position( |x| *x == val );
 
 
-	if let Some(rd) = pos {
-	    self.stack.remove(rd);
-	}
+        if let Some(rd) = pos {
+            self.stack.remove(rd);
+        }
 
-	self.stack.push_front(val);
-	
-	return pos.map(|x| x+1);
+        self.stack.push_front(val);
+        
+        return pos.map(|x| (x+1) as u32);
     }
 }
 
