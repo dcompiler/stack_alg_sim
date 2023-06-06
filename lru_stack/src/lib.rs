@@ -1,5 +1,4 @@
 #![feature(linked_list_remove)]   // Need nightly build of the Rust compiler
-
 use lru_trait::LRU;
 use std::collections::LinkedList;
 

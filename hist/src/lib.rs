@@ -10,22 +10,22 @@ pub struct Hist {
 
 impl Hist {
     pub fn new() -> Hist {
-		Hist{hist: HashMap::new()}
+		  Hist{hist: HashMap::new()}
     }
     
     pub fn add_dist(&mut self, d: Option<usize> ) {
-		self.hist.entry(d).and_modify(|counter| *counter += 1).or_insert(1);
+		  self.hist.entry(d).and_modify(|counter| *counter += 1).or_insert(1);
     }
 
     pub fn to_vec(&self) -> Vec<(Option<usize>,usize)> {
-		let mut h2 = self.hist.clone();
-		let inf_rds = h2.remove(&None);
-		let mut hvec: Vec<(Option<usize>,usize)> = h2.iter().map(|(x,y)| (*x, *y)).collect();
-		hvec.sort_by(|a,b| a.0.cmp(&b.0));
-		if let Some(cnt) = inf_rds {
-			hvec.push((None, cnt));
-		}
-		return hvec;
+		  let mut h2 = self.hist.clone();
+	  	let inf_rds = h2.remove(&None);
+	  	let mut hvec: Vec<(Option<usize>,usize)> = h2.iter().map(|(x,y)| (*x, *y)).collect();
+	  	hvec.sort_by(|a,b| a.0.cmp(&b.0));
+	  	if let Some(cnt) = inf_rds {
+	  		hvec.push((None, cnt));
+	  	}
+		  return hvec;
     }
 }
 
