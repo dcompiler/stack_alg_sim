@@ -8,7 +8,7 @@ pub struct LRUStack<T> {
 }
 
 impl<T: PartialEq + Clone> LRU<T> for LRUStack<T> {
-    fn rec_access(&mut self, val: T) -> Option<u32> {
+    fn rec_access(&mut self, val: T) -> Option<usize> {
         self.rec_access_impl(val)
     }
 }
@@ -21,7 +21,7 @@ impl<T: PartialEq> LRUStack<T> {
         }
     }
 
-    pub fn rec_access_impl(&mut self, val: T) -> Option<u32> {
+    pub fn rec_access_impl(&mut self, val: T) -> Option<usize> {
 
         let pos = self.stack.iter().position( |x| *x == val );
 
@@ -32,7 +32,7 @@ impl<T: PartialEq> LRUStack<T> {
 
         self.stack.push_front(val);
         
-        return pos.map(|x| (x+1) as u32);
+        return pos.map(|x| x+1 );
     }
 }
 
