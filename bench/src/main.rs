@@ -9,7 +9,9 @@ use rusoto_s3::{PutObjectRequest, S3};
 use rusoto_core::{Region, ByteStream};
 use std::error::Error;
 use lru_trait::LRU;
-
+// use dace::ast::{Node, Stmt, LoopBound, AryRef};
+// use dace::arybase::set_arybase;
+use dace_tests::*;
 
 fn generate_data(size: usize, mode: &String, flag: u8) -> Vec<String>{
     
@@ -57,7 +59,7 @@ fn generate_data(size: usize, mode: &String, flag: u8) -> Vec<String>{
     } 
 }
 
-async fn save_csv(data: &Vec<(String, Option<u32>)>, bucket: &str, path: &str) -> Result<(), Box<dyn Error>> {
+async fn save_csv(data: &Vec<(String, Option<usize>)>, bucket: &str, path: &str) -> Result<(), Box<dyn Error>> {
     let mut wtr = Writer::from_writer(vec![]);
 
     for i in data {
@@ -98,7 +100,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let start = Instant::now();
 
-    let dists: Vec<(String, Option<u32>)> = match t_mode.as_str(){
+
+
+    let dists: Vec<(String, Option<usize>)> = match t_mode.as_str(){
+        // "2mm" => {
+        //     dace_tests::_2mm()
+        // },
         "MM" => {
             match mode.as_str(){
                 "Vec" => {
@@ -127,7 +134,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 Box::new(LRUStack::<String>::new())
             };
 
-            let mut res: Vec<(String, Option<u32>)> = Vec::new();
+            let mut res: Vec<(String, Option<usize>)> = Vec::new();
 
             for r in 0..*repeat{
                 println!("repeating {} time.", r + 1);
@@ -164,7 +171,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
     
-        
+    
     let duration = start.elapsed();
     // total_time += duration;
     println!("{:?}", duration);

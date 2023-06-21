@@ -17,3 +17,6 @@ rusoto_core = "0.47.0"
 rusoto_s3 = "0.47.0"
 tokio = { version = "1", features = ["full"] }
 lru_trait = { path = "../lru_trait" }
+dace_tests = { path = "../../dace/dace_tests" }
+static_rd = { path = "../../static_rd" }
+

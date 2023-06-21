@@ -6,7 +6,7 @@ pub struct LRUVec<T> {
 }
 
 impl<T: PartialEq + Clone> LRU<T> for LRUVec<T> {
-    fn rec_access(&mut self, val: T) -> Option<u32> {
+    fn rec_access(&mut self, val: T) -> Option<usize> {
         self.rec_access_impl(val)
     }
 }
@@ -19,7 +19,7 @@ impl<T: PartialEq> LRUVec<T> {
 		}
 	}
 
-	pub fn rec_access_impl(&mut self, val: T) -> Option<u32> {
+	pub fn rec_access_impl(&mut self, val: T) -> Option<usize> {
 		if self.stack.len() == 0 {
 			self.stack.push(Some(Box::new(val)));
 			return None;
@@ -36,7 +36,7 @@ impl<T: PartialEq> LRUVec<T> {
 			last = temp; 
 			if **last.as_ref().unwrap() == val {
 		    	self.stack[0] = last;
-				return Some(pos as u32 + 1);
+				return Some(pos + 1);
 			}
 	    }
 		// a cold miss
