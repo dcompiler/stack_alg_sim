@@ -1,8 +1,11 @@
+use serde::{Serialize, Deserialize};
+// use serde_derive::{Serialize, Deserialize};
 use std::collections::HashMap;
 use std::fmt;
 
 //use csv::WriterBuilder;
 
+#[derive(Serialize, Deserialize)]
 pub struct Hist {
     hist: HashMap<Option<usize>,usize>,
     // attrs: HashMap<String,String>
