@@ -2,7 +2,7 @@ use lru_stack::LRUStack;
 use lru_vec::LRUVec;
 use lru_trait::LRU;
 
-pub fn nmm(a_size_row: usize, a_size_col: usize, b_size_row: usize, b_size_col: usize, lru_type: String) -> Vec<(String, Option<u32>)>{
+pub fn nmm(a_size_row: usize, a_size_col: usize, b_size_row: usize, b_size_col: usize, lru_type: String) -> Vec<(String, Option<usize>)>{
     assert_eq!(a_size_col, b_size_row, "The number of A columns must be equal to the number of B rows for matrix multiplication.");
     
     let mut cache: Box<dyn LRU<(usize, usize, char)>> = if lru_type == "Vec" {
@@ -11,7 +11,7 @@ pub fn nmm(a_size_row: usize, a_size_col: usize, b_size_row: usize, b_size_col: 
         Box::new(LRUStack::<(usize, usize, char)>::new())
     };
 
-    let mut dists: Vec<(String, Option<u32>)> = Vec::new();
+    let mut dists: Vec<(String, Option<usize>)> = Vec::new();
 
     for i in 0..a_size_row{
         for j in 0..b_size_col{
